@@ -39,20 +39,7 @@ When the reader has completed this Code Pattern, they will understand how to:
 This code pattern contains several pieces. The app server communicates with the Watson Visual Recognition service. The web application is built locally and run in a browser, or accessible on the web server at the same URL. You can deploy the server application using the IBM Cloud, or locally on your machine.
 Note that when you first run the server app approximately 125M of image files will be downloaded to the server/data/ directory. These will be used to train the custom classifier.
 
-## Deploy the server application to IBM Cloud
 
-[![Deploy to IBM Cloud](https://cloud.ibm.com/devops/setup/deploy/button.png)](https://cloud.ibm.com/devops/setup/deploy?repository=https://github.com/IBM/cities-from-space)
-
-Press the above ``Deploy to IBM Cloud`` button and then click on ``Deploy``.
-
-To monitor the deployment, in Toolchains click on `Delivery Pipeline`  and view the logs while the apps is being deployed.
-
-![Toolchain pipeline](doc/source/images/toolchain-pipeline.png)
-
-To see the app and services created and configured for this code pattern, use the IBM Cloud dashboard. The app is named `cities-from-space` with a unique suffix. The following services are created and easily identified by the `cfs-` prefix:
-    * cfs-visual-recognition
-
-Once deployed, jump to [step #5](#5-use-the-application-from-a-browser) to test.
 
 ## Deploy the server application locally
 
@@ -65,7 +52,7 @@ Perform steps 1-4:
 
 ## 1. Clone the repo
 
-Clone the `cities-from-space` repo locally. In a terminal, run:
+Download or clone the `cities-from-space` repo locally. In a terminal, run:
 
 ```
 $ git clone https://github.com/IBM/cities-from-space
@@ -74,26 +61,13 @@ $ cd cities-from-space
 
 ## 2. Create the Watson Visual Recognition service
 
-Create a Watson Visual Recognition service using IBM Cloud or Watson Studio, a free `lite` plan and a `Standard` plan is available for both. Ensure the service is named `wvda-visual-recognition`.
-
-* [**Watson Visual Recognition on Watson Studio**](https://dataplatform.cloud.ibm.com)
-
-Under the top bar `Services` -> `Watson services` click `+ Add service` and choose `Visual Recognition`
-
-OR
+Create a Watson Visual Recognition service using IBM Cloud, a free `lite` plan and a `Standard` plan is available.
 
 * [**Watson Visual Recognition on IBM Cloud**](https://cloud.ibm.com/catalog/services/visual-recognition)
 
 ## 3. Add Visual Recoginition API key to .env file
 
 To use the Visual Recognition service you will need the IAM apikey.
-
-To retrieve the key in Watson Studio, scroll down to the list of `Visual Recognition` services,
-find the service you've created and click on the name.
-
-Go to the `Credentials` tab and click `Show credential` for existing creds of `New credential +` if necessary.
-
-![](https://github.com/IBM/pattern-utils/blob/master/visual-recognition/WatsonStuidioVizRecIAMcred.png)
 
 In IBM Cloud it will look like this:
 
@@ -108,9 +82,6 @@ VISUAL_RECOGNITION_IAM_APIKEY=<add_apikey>
 
 ## 4. Install dependencies and run server
 
-#### If you used the Deploy to IBM Cloud button...
-
-If you used ``Deploy to IBM Cloud``, the setup is automatic.
 
 #### If you decided to run the app locally...
 
@@ -132,7 +103,6 @@ In order to classifier images of cities from space, you can point a browser to t
 
 * For a server running locally, open a browser tab to `localhost:<port>`.
 The default port is `3000`
-* For a server running on IBM Cloud, open a browser tab and point it to the URL for your server `<IBM_Cloud_server_URL>`
 
 You can then upload a local picture, i.e one from this repository in `test/data/`, or choose
 one of the `Image Samples` from the browser window.
@@ -142,44 +112,6 @@ one of the `Image Samples` from the browser window.
 Here's a sample using an image of Tokyo at night:
 
 ![](doc/source/images/SampleCitiesFromSpace.png)
-
-# Troubleshooting
-
-* Test the Visual Recognition service using the instructions in [test/README.md](test/README.md)
-
-* Error: Server error, status code: 502, error code: 10001, message: Service broker error: {"description"=>"Only one free key is allowed per organization. Contact your organization owner to obtain the key."}
-
-> Only one free key is allowed per organization. Binding the service to an application triggers a process that tries to allocate a new key, which will get rejected. If you already have an instance of Visual Recognition and an associated key, you can bind that instance to your application or update the API key in your server code to tell the app which key to use.
-
-* Deploy or Dashboard shows app is not running
-
-> You may see logs in the Deploy Stage that indicate that the app has crashed and cannot start:
-
-```
-Starting app cities-from-space-20171206202105670 in org scott.dangelo / space dev as scott.dangelo@ibm.com...
-
-0 of 1 instances running, 1 starting
-0 of 1 instances running, 1 starting
-0 of 1 instances running, 1 starting
-0 of 1 instances running, 1 starting
-0 of 1 instances running, 1 starting
-0 of 1 instances running, 1 starting
-0 of 1 instances running, 1 starting
-0 of 1 instances running, 1 starting
-0 of 1 instances running, 1 crashed
-FAILED
-Error restarting application: Start unsuccessful
-
-TIP: use 'cf logs cities-from-space-20171206202105670 --recent' for more information
-
-Finished: FAILED
-```
-
-> OR you may see in the IBM Cloud console that the app is `Not Running`:
-
-![App not running](doc/source/images/app-not-running.png)
-
-> Both of these can be spurious errors. Click the `Visit App URL` link in the IBM Cloud console, or try `Runtime` -> `SSH`, or simply test the app to see if it is running.
 
 # Links
 
